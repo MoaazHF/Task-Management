@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    image: moaazhf/task-manager:latest # (غيره باسمك لو حبيت)
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db # اسم خدمة الداتابيز
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=1610
+      - DB_NAME=task-management
+      - PORT=3000
+    restart: on-failure # يحاول تاني لو الداتابيز لسه مقامتنش
+
+  db:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1610
+      POSTGRES_DB: task-management
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

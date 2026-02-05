@@ -6,7 +6,6 @@ import {
   IonToolbar,
   IonList,
   IonItem,
-  IonLabel,
   IonInput,
   IonButton,
   IonIcon,
@@ -18,10 +17,6 @@ import {
   IonSelect,
   IonSelectOption,
   IonSearchbar,
-  IonCard,
-  IonCardContent,
-  IonCardTitle,
-  IonCardSubtitle,
 } from "@ionic/react";
 import { close, closeCircle, create, prismSharp, trash } from "ionicons/icons";
 import { useEffect, useState } from "react";
@@ -55,34 +50,32 @@ const Home: React.FC = () => {
     if (filterStatus) params.append("status", filterStatus);
     if (filterPriority) params.append("priority", filterPriority);
 
-    const url = `http://localhost:3000/tasks?${params.toString()}`;
+    const url = `/api/tasks?${params.toString()}`;
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => setTasks(data))
       .catch((err) => console.error("Filter Error:", err));
   };
-  useEffect(() => {
-    fetchTasks();
-  }, []);
 
   const handleAddTask = () => {
     if (!text) return;
-    console.log(text, textDescription, deadline, newPriority);
+
     const newTask = {
       title: text,
       description: textDescription,
       deadline: deadline,
       priority: newPriority,
     };
-    console.log("Submitting:", newTask); // 1. نشوف بنبعت إيه
-    fetch("http://localhost:3000/tasks", {
+
+    fetch("/api/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
     })
       .then((res) => res.json())
       .then((res) => setTasks([res, ...tasks]));
+
     setText("");
     setTextDescription("");
     setNewPriority("");
@@ -94,52 +87,35 @@ const Home: React.FC = () => {
     newStatus: string,
     newPriority?: string,
   ) => {
-    const updatedTask: any = {
-      status: newStatus,
-    };
-    if (newPriority) {
-      updatedTask.priority = newPriority;
-    }
+    const updatedTask: any = { status: newStatus };
+    if (newPriority) updatedTask.priority = newPriority;
 
-    fetch(`http://localhost:3000/tasks/${id}`, {
+    fetch(`/api/tasks/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
     })
       .then((res) => res.json())
       .then((task) => {
-        const newArray = tasks.map((i) => {
-          if (i.id === id) {
-            return task;
-          } else {
-            return i;
-          }
-        });
+        const newArray = tasks.map((i) => (i.id === id ? task : i));
         setTasks(newArray);
       })
-      .catch((err) => {
-        console.log(`Erro While Updating the task with id:${id}`, err);
-      });
+      .catch((err) => console.log(`Error updating task ${id}`, err));
   };
 
   const handleDelete = (id: string) => {
-    fetch(`http://localhost:3000/tasks/${id}`, { method: "DELETE" })
+    fetch(`/api/tasks/${id}`, { method: "DELETE" })
       .then(() => {
         setTasks(tasks.filter((task) => task.id !== id));
       })
-      .catch((err) =>
-        console.error(
-          `Error Happend While trying to Delete Task with ID:${id}`,
-          err,
-        ),
-      );
+      .catch((err) => console.error(`Error deleting task ${id}`, err));
   };
 
   const getColorPriority = (priority: string) => {
     if (priority === "HIGH") return "red";
     if (priority === "MEDIUM") return "orange";
     if (priority === "LOW") return "green";
-    return "#888"; // لون افتراضي
+    return "#888";
   };
   const getColorStatus = (status: string) => {
     if (status === "OPEN") return "red";
@@ -268,8 +244,8 @@ const Home: React.FC = () => {
         {/* Task List */}
         <IonList>
           {tasks.map((task) => (
-            <div className="card-space">
-              <div key={task.id} className="card-text-color ">
+            <div className="card-space" key={task.id}>
+              <div className="card-text-color ">
                 <div className="card-text-color ">
                   <h1>
                     Title: <span style={{ color: "white" }}>{task.title}</span>
