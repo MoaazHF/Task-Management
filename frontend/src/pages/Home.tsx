@@ -199,6 +199,8 @@ const Home: React.FC = () => {
 
     setLastScrollY(currentY);
   };
+
+  //I have Updated the UI using Ai , because i concern about styling not just the app functionality, i have added some animations and transitions to make the app more smooth and modern, also i have added a dark mode toggle button to switch between light and dark themes, and i have added a confirmation alert before deleting a task to prevent accidental deletions, i have also added a search bar and filters for status and priority to make it easier for users to find specific tasks, and i have made the header hide on scroll down and show on scroll up for better user experience on mobile devices.
   return (
     <IonPage>
       <IonContent
