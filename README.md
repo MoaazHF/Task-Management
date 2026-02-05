@@ -1,4 +1,4 @@
-# 🚀 Advanced Task Manager
+# Task Manager App
 
 A modern, full-stack Task Management application built with performance and UX in mind. Featuring a Glassmorphism UI, Dark/Light mode, and smooth animations.
 
