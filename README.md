@@ -51,6 +51,20 @@ Web/Mobile App :
 
 ![Responsive](./screenshots/CrossPlatformApp.png)
 
+```
+
+## ⚠️ Important Note Regarding UI Theme
+
+This application is built using **Ionic Framework**, which deeply integrates with your system's and browser's native color scheme preferences.
+
+For the **best visual experience** (especially to enjoy the Glassmorphism effects and correct contrast):
+
+- The app automatically detects your system preference on startup.
+- If you switch modes manually using the toggle button ☀️/🌙, **it is recommended that your browser's theme matches the selected mode.**
+
+> **Why?** Ionic components (like Modals and Alerts) inherit base styles from the browser's `prefers-color-scheme` media query. Keeping them in sync ensures 100% color consistency.
+```
+
 ## Architecture
 
 - **Frontend:** Communicates via REST API.
