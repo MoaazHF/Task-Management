@@ -3,7 +3,7 @@ version: "3.8"
 services:
   app:
     build: .
-    image: moaazhf/task-manager:latest # (غيره باسمك لو حبيت)
+    image: moaaz20/task-manager:latest
     ports:
       - "3000:3000"
     depends_on:
