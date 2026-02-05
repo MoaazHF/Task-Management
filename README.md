@@ -32,7 +32,7 @@ This command will pull the images and start the full stack:
 **Bash**
 
 ```
-docker-compose up
+docker-compose up --build
 ```
 
 Visit `http://localhost:3000` to see the app.
@@ -52,7 +52,6 @@ Web/Mobile App :
 ![Responsive](./screenshots/CrossPlatformApp.png)
 
 ```
-
 ## ⚠️ Important Note Regarding UI Theme
 
 This application is built using **Ionic Framework**, which deeply integrates with your system's and browser's native color scheme preferences.
