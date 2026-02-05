@@ -1,0 +1,8 @@
+# Ignore dependencies in all subfolders
+**/node_modules
+**/dist
+**/build
+**/.DS_Store
+
+# Environment variables
+.env

@@ -1,0 +1,102 @@
+.text-color {
+  color: rgb(225, 97, 5);
+  font-size: small;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.text-color-deadline {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+.center-div {
+  width: 90%;
+  margin: 20px auto;
+  min-height: 60vh;
+}
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.input-fields .IonInput {
+  color: black;
+  border-radius: 10px;
+  text-align: center;
+  width: 80%;
+  margin: 10px auto;
+  background-color: white;
+}
+
+.btn {
+  --background: white;
+  --color: black;
+  font-size: larger;
+  font-weight: bold;
+  border-radius: 10px;
+  text-align: center;
+  width: 30%;
+  padding: 0 10px;
+  margin: 10px auto;
+  --border-radius: 25px;
+  --box-shadow: 0 4px 15px rgba(255, 255, 255, 0.711);
+}
+
+.btn-div {
+  display: flex;
+}
+.ion-alert {
+  backdrop-filter: blur(10px);
+}
+#select-label {
+  padding: 10px;
+  text-align: center;
+  width: 70%;
+}
+
+.card-text-color {
+  color: rgb(177, 177, 177);
+  padding: 40px;
+  line-height: 26px;
+}
+.card-space {
+  display: flex;
+  flex-direction: column;
+  border: 1px rgba(250, 250, 250, 0.499) solid;
+  border-radius: 20px;
+  margin: 10px;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+.btn-delete {
+  --background: rgb(255, 8, 8);
+  --color: rgb(255, 255, 255);
+  font-size: larger;
+  font-weight: bold;
+  border-radius: 10px;
+  text-align: center;
+  --box-shadow: 0 4px 15px rgba(218, 127, 127, 0.711);
+}
+.btn-create {
+  --background: rgb(255, 255, 255);
+  --color: black;
+  font-size: larger;
+  font-weight: bold;
+  border-radius: 10px;
+  text-align: center;
+
+  --box-shadow: 0 4px 15px rgba(255, 255, 255, 0.711);
+}
+.button-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 10px;
+}
