@@ -41,7 +41,9 @@ Visit `http://localhost:3000` to see the app.
 
 ## Screenshots
 
-Light Mode:![Light Mode](./screenshots/lightmode.png)
+Light Mode:
+
+![LightMode](./screenshots/LightMode.png)
 
 Dark Mode:![Dark Mode](./screenshots/DarkMode.png)
 
