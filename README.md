@@ -54,7 +54,7 @@ You don't need Node.js or Postgres installed. Just **Docker**!
 ### 1. Clone the repository
 
 ```bash
-git clone [https://github.com/moaazhf/Task-Management.git](https://github.com/moaazhf/Task-Management.git)
+git clone https://github.com/moaazhf/Task-Management.git
 cd Task-Management
 ```
 
