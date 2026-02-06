@@ -1,37 +1,42 @@
-FROM node:18-alpine AS builder
+# syntax=docker/dockerfile:1.5
+FROM node:18-alpine AS base
+RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+FROM base AS frontend-deps
+WORKDIR /app/frontend
+COPY frontend/package.json frontend/pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm-frontend,target=/pnpm/store \
+    pnpm install --frozen-lockfile --prefer-offline
 
-WORKDIR /app
+FROM base AS frontend-builder
+WORKDIR /app/frontend
+COPY --from=frontend-deps /app/frontend/node_modules ./node_modules
+COPY frontend/ ./
+RUN --mount=type=cache,target=/app/frontend/.vite \
+    pnpm run build
 
-COPY frontend/package.json frontend/pnpm-lock.yaml ./frontend/
-COPY backend/package.json backend/pnpm-lock.yaml ./backend/
+FROM base AS backend-deps
+WORKDIR /app/backend
+COPY backend/package.json backend/pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm-backend,target=/pnpm/store \
+    pnpm install --frozen-lockfile --prefer-offline
 
-RUN cd frontend && pnpm install --frozen-lockfile
-RUN cd backend && pnpm install --frozen-lockfile
-
-COPY . .
-
-RUN cd frontend && pnpm run build
-
-RUN cd backend && pnpm run build
-
-RUN cd backend && pnpm prune --prod
+FROM base AS backend-builder
+WORKDIR /app/backend
+COPY --from=backend-deps /app/backend/node_modules ./node_modules
+COPY backend/ ./
+RUN pnpm run build && pnpm prune --prod
 
 FROM node:18-alpine AS runner
-
 WORKDIR /app
-
-COPY --from=builder /app/backend/dist ./backend/dist
-COPY --from=builder /app/backend/node_modules ./backend/node_modules
-COPY --from=builder /app/backend/package.json ./backend/package.json
-
-COPY --from=builder /app/frontend/dist ./frontend/dist
-
 ENV NODE_ENV=production
-ENV PORT=3000
-
-EXPOSE 3000
+COPY --from=backend-builder /app/backend/dist ./backend/dist
+COPY --from=backend-builder /app/backend/node_modules ./backend/node_modules
+COPY --from=backend-builder /app/backend/package.json ./backend/package.json
+COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
 WORKDIR /app/backend
+EXPOSE 3000
 CMD ["node", "dist/main"]
