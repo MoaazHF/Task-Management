@@ -9,13 +9,13 @@ services:
     depends_on:
       - db
     environment:
-      - DB_HOST=db # اسم خدمة الداتابيز
+      - DB_HOST=db
       - DB_PORT=5432
       - DB_USERNAME=postgres
       - DB_PASSWORD=1610
       - DB_NAME=task-management
       - PORT=3000
-    restart: on-failure # يحاول تاني لو الداتابيز لسه مقامتنش
+    restart: on-failure
 
   db:
     image: postgres:14-alpine
