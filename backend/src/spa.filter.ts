@@ -13,7 +13,6 @@ export class SpaFallbackFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
 
-    // 1. لو الطلب رايح للـ API ومالقاش داتا، رجع 404 حقيقية
     if (request.url.startsWith('/api')) {
       return response.status(404).json({
         statusCode: 404,
@@ -21,8 +20,6 @@ export class SpaFallbackFilter implements ExceptionFilter {
       });
     }
 
-    // 2. غير كده (لأي صفحة تانية)، رجع ملف الـ React الرئيسي
-    // بنستخدم process.cwd() عشان نجيب مسار المشروع الحالي سواء لوكال أو دوكر
     const indexPath = join(
       process.cwd(),
       '..',

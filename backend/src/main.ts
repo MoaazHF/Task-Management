@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { SpaFallbackFilter } from './spa.filter'; // 👈 استدعاء الملف الجديد
+import { SpaFallbackFilter } from './spa.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
