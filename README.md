@@ -60,7 +60,22 @@ cd Task-Management
 
 **Markdown**
 
-### 2. Environment Variables (Optional)
+
+### 2. Run with Docker 🐳
+
+This command will pull the images and start the full stack:
+
+**Bash**
+
+```
+docker-compose up --build
+```
+
+you also can find the image on docker hub:https://hub.docker.com/repository/docker/moaaz20/task-manager
+
+Visit `http://localhost:3000` to see the app.
+
+### 3. Environment Variables (Optional)
 
 The project comes with a default configuration in `docker-compose.yml`. However, if you want to customize the database credentials:
 
@@ -78,18 +93,6 @@ The project comes with a default configuration in `docker-compose.yml`. However,
    DB_PASSWORD=your_secure_password
    DB_DATABASE=task_management
    ```
-
-### 3. Run with Docker 🐳
-
-This command will pull the images and start the full stack:
-
-**Bash**
-
-```
-docker-compose up --build
-```
-
-Visit `http://localhost:3000` to see the app.
 
 ---
 
