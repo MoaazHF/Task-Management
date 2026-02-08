@@ -75,7 +75,7 @@ body.dark .page-background {
 }
 .typing-message {
   font-size: 1.4rem;
-  color: var(--main-orange);
+  color: #000;
   margin-bottom: 10px;
   padding-left: 4px;
   letter-spacing: 0.2px;
@@ -85,6 +85,9 @@ body.dark .page-background {
 }
 .typing-message--above-inputs {
   font-weight: 700;
+}
+.typing-highlight {
+  color: var(--main-orange);
 }
 .typing-cursor {
   display: inline-block;

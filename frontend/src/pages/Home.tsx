@@ -61,6 +61,7 @@ const Home: React.FC = () => {
   const [filterPriority, setFilterPriority] = useState<string>("");
   const [typedMessage, setTypedMessage] = useState<string>("");
   const fullMessage = "Hello RobinFood Team! I hope you have a good day! <3";
+  const brandName = "RobinFood";
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
@@ -272,6 +273,21 @@ const Home: React.FC = () => {
     return Math.round((value / totalStatus) * 100);
   };
 
+  const renderTypedMessage = () => {
+    const brandIndex = typedMessage.indexOf(brandName);
+    if (brandIndex === -1) return typedMessage;
+    const before = typedMessage.slice(0, brandIndex);
+    const brand = typedMessage.slice(brandIndex, brandIndex + brandName.length);
+    const after = typedMessage.slice(brandIndex + brandName.length);
+    return (
+      <>
+        {before}
+        <span className="typing-highlight">{brand}</span>
+        {after}
+      </>
+    );
+  };
+
   //I have Updated the UI using Ai , because i concern about styling not just the app functionality, i have added some animations and transitions to make the app more smooth and modern, also i have added a dark mode toggle button to switch between light and dark themes, and i have added a confirmation alert before deleting a task to prevent accidental deletions, i have also added a search bar and filters for status and priority to make it easier for users to find specific tasks, and i have made the header hide on scroll down and show on scroll up for better user experience on mobile devices.
   return (
     <IonPage>
@@ -361,7 +377,7 @@ const Home: React.FC = () => {
                 className="typing-message typing-message--above-inputs"
                 aria-live="polite"
               >
-                {typedMessage}
+                {renderTypedMessage()}
                 <span className="typing-cursor" aria-hidden="true">
                   |
                 </span>
