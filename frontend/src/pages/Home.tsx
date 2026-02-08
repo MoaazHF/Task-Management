@@ -23,8 +23,6 @@ import {
   IonBadge,
   IonChip,
   IonLabel,
-  IonDatetimeButton,
-  IonModal,
   IonButtons,
   ScrollDetail,
 } from "@ionic/react";
@@ -57,6 +55,7 @@ const Home: React.FC = () => {
   const [newPriority, setNewPriority] = useState<string>();
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [deadline, setDeadline] = useState<string>();
+  const [isDateOpen, setIsDateOpen] = useState(false);
   const [searchText, setSearchText] = useState<string>("");
   const [filterStatus, setFilterStatus] = useState<string>("");
   const [filterPriority, setFilterPriority] = useState<string>("");
@@ -90,6 +89,22 @@ const Home: React.FC = () => {
     toggleBodyClass(newMode);
   };
 
+  const formatDateLabel = (value?: string) => {
+    if (!value) return "Select Deadline";
+    const normalized = value.includes("T") ? value : `${value}T00:00:00`;
+    return new Date(normalized).toLocaleDateString();
+  };
+
+  const parseJsonSafely = async (res: Response) => {
+    const text = await res.text();
+    if (!text) return null;
+    try {
+      return JSON.parse(text);
+    } catch {
+      throw new Error(`Invalid JSON response (status ${res.status})`);
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
   }, [searchText, filterStatus, filterPriority]);
@@ -103,18 +118,31 @@ const Home: React.FC = () => {
     const url = `/api/tasks?${params.toString()}`;
 
     fetch(url)
-      .then((res) => res.json())
-      .then((data) => setTasks(data))
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Fetch tasks failed (status ${res.status})`);
+        }
+        return parseJsonSafely(res);
+      })
+      .then((data) => {
+        if (Array.isArray(data)) setTasks(data);
+        else if (data) setTasks([data]);
+      })
       .catch((err) => console.error("Filter Error:", err));
   };
 
   const handleAddTask = () => {
-    if (!text) return;
+    const isValid =
+      text.trim().length > 0 &&
+      textDescription.trim().length > 0 &&
+      !!newPriority &&
+      !!deadline;
+    if (!isValid) return;
     const newTask = {
       title: text,
       description: textDescription,
-      deadline: deadline,
       priority: newPriority || "LOW",
+      deadline: deadline,
     };
 
     fetch("/api/tasks", {
@@ -122,8 +150,16 @@ const Home: React.FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
     })
-      .then((res) => res.json())
-      .then((res) => setTasks([res, ...tasks]));
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Add task failed (status ${res.status})`);
+        }
+        return parseJsonSafely(res);
+      })
+      .then((task) => {
+        if (task) setTasks([task, ...tasks]);
+      })
+      .catch((err) => console.error("Add task error:", err));
 
     setText("");
     setTextDescription("");
@@ -144,10 +180,17 @@ const Home: React.FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Update task failed (status ${res.status})`);
+        }
+        return parseJsonSafely(res);
+      })
       .then((task) => {
-        const newArray = tasks.map((i) => (i.id === id ? task : i));
-        setTasks(newArray);
+        if (task) {
+          const newArray = tasks.map((i) => (i.id === id ? task : i));
+          setTasks(newArray);
+        }
       })
       .catch((err) => console.log(`Error updating task ${id}`, err));
   };
@@ -295,7 +338,7 @@ const Home: React.FC = () => {
                       style={{ fontWeight: "bold" }}
                     />
                   </IonItem>
-                  <IonItem lines="none" className="input-item">
+                  <IonItem lines="none" className="input-item ion-margin-top">
                     <IonInput
                       value={textDescription}
                       placeholder="Add details..."
@@ -327,22 +370,25 @@ const Home: React.FC = () => {
                       <IonItem
                         lines="none"
                         style={{ "--background": "transparent", padding: 0 }}
+                        button
+                        onClick={() => setIsDateOpen((v) => !v)}
                       >
-                        <IonDatetimeButton datetime="datetime"></IonDatetimeButton>
-                        <IonModal
-                          keepContentsMounted={true}
-                          className="date-background-blur"
-                        >
-                          <IonDatetime
-                            id="datetime"
-                            presentation="date"
-                            className="date-background-blur"
-                            onIonChange={(e) =>
-                              setDeadline(e.detail.value as string)
-                            }
-                          ></IonDatetime>
-                        </IonModal>
+                        <IonLabel>{formatDateLabel(deadline)}</IonLabel>
                       </IonItem>
+                      {isDateOpen && (
+                        <IonDatetime
+                          id="datetime"
+                          presentation="date"
+                          value={deadline}
+                          showDefaultButtons={false}
+                          onIonChange={(e) => {
+                            const raw = e.detail.value as string;
+                            const dateOnly = raw ? raw.split("T")[0] : raw;
+                            setDeadline(dateOnly);
+                            setIsDateOpen(false);
+                          }}
+                        ></IonDatetime>
+                      )}
                     </IonCol>
                   </IonRow>
 
@@ -350,7 +396,12 @@ const Home: React.FC = () => {
                     expand="block"
                     className="add-btn"
                     onClick={handleAddTask}
-                    disabled={!text}
+                    disabled={
+                      !text.trim() ||
+                      !textDescription.trim() ||
+                      !newPriority ||
+                      !deadline
+                    }
                   >
                     <IonIcon icon={add} slot="start" /> Add Task
                   </IonButton>
@@ -372,7 +423,15 @@ const Home: React.FC = () => {
                       layout
                       className="motion-wrapper"
                     >
-                      <IonCard className="task-card">
+                      <IonCard
+                        className={`task-card ${
+                          task.status === "DONE"
+                            ? "is-done"
+                            : task.status === "IN_PROGRESS"
+                              ? "is-in-progress"
+                              : ""
+                        }`}
+                      >
                         <IonCardHeader>
                           <div
                             style={{
