@@ -34,7 +34,7 @@ import {
   moon,
   sunny,
 } from "ionicons/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Home.css";
 
@@ -59,12 +59,21 @@ const Home: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [filterStatus, setFilterStatus] = useState<string>("");
   const [filterPriority, setFilterPriority] = useState<string>("");
+  const [typedMessage, setTypedMessage] = useState<string>("");
+  const fullMessage = "Hello RobinFood Team! I hope you have a good day! <3";
 
-  // 1. حالات الـ Dark Mode والحذف
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
+  const statusCounts = useMemo(() => {
+    const result = { DONE: 0, IN_PROGRESS: 0, OPEN: 0 };
+    tasks.forEach((task) => {
+      if (task.status === "DONE") result.DONE += 1;
+      else if (task.status === "IN_PROGRESS") result.IN_PROGRESS += 1;
+      else result.OPEN += 1;
+    });
+    return result;
+  }, [tasks]);
 
-  // 2. كشف وتطبيق الـ Dark Mode
   useEffect(() => {
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
     setIsDarkMode(prefersDark.matches);
@@ -108,6 +117,19 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchTasks();
   }, [searchText, filterStatus, filterPriority]);
+
+  useEffect(() => {
+    let index = 0;
+    setTypedMessage("");
+    const interval = setInterval(() => {
+      index += 1;
+      setTypedMessage(fullMessage.slice(0, index));
+      if (index >= fullMessage.length) {
+        clearInterval(interval);
+      }
+    }, 110);
+    return () => clearInterval(interval);
+  }, [fullMessage]);
 
   const fetchTasks = () => {
     const params = new URLSearchParams();
@@ -243,6 +265,13 @@ const Home: React.FC = () => {
     setLastScrollY(currentY);
   };
 
+  const totalStatus =
+    statusCounts.DONE + statusCounts.IN_PROGRESS + statusCounts.OPEN;
+  const percent = (value: number) => {
+    if (totalStatus === 0) return 0;
+    return Math.round((value / totalStatus) * 100);
+  };
+
   //I have Updated the UI using Ai , because i concern about styling not just the app functionality, i have added some animations and transitions to make the app more smooth and modern, also i have added a dark mode toggle button to switch between light and dark themes, and i have added a confirmation alert before deleting a task to prevent accidental deletions, i have also added a search bar and filters for status and priority to make it easier for users to find specific tasks, and i have made the header hide on scroll down and show on scroll up for better user experience on mobile devices.
   return (
     <IonPage>
@@ -279,8 +308,8 @@ const Home: React.FC = () => {
                 <IonCol size="12">
                   <IonSearchbar
                     value={searchText}
-                    debounce={500}
-                    onIonChange={(e) => setSearchText(e.detail.value!)}
+                    debounce={0}
+                    onIonInput={(e) => setSearchText(e.detail.value!)}
                     placeholder="Search tasks..."
                     className="custom-searchbar"
                   ></IonSearchbar>
@@ -328,6 +357,15 @@ const Home: React.FC = () => {
         <IonGrid>
           <IonRow className="ion-justify-content-center">
             <IonCol sizeMd="8" sizeLg="6" sizeXs="12">
+              <div
+                className="typing-message typing-message--above-inputs"
+                aria-live="polite"
+              >
+                {typedMessage}
+                <span className="typing-cursor" aria-hidden="true">
+                  |
+                </span>
+              </div>
               <IonCard className="input-card">
                 <IonCardContent>
                   <IonItem lines="none" className="input-item">
@@ -405,6 +443,73 @@ const Home: React.FC = () => {
                   >
                     <IonIcon icon={add} slot="start" /> Add Task
                   </IonButton>
+                </IonCardContent>
+              </IonCard>
+              <IonCard className="analytics-card">
+                <IonCardHeader>Performance (By Status)</IonCardHeader>
+                <IonCardContent>
+                  {tasks.length === 0 ? (
+                    <div className="analytics-empty">
+                      No tasks yet to measure performance.
+                    </div>
+                  ) : (
+                    <div className="hchart">
+                      <div className="hchart-legend">
+                        <span className="legend-item done">DONE</span>
+                        <span className="legend-item in-progress">
+                          IN PROGRESS
+                        </span>
+                        <span className="legend-item open">OPEN</span>
+                      </div>
+                      <div className="hchart-grid">
+                        <div className="hchart-row">
+                          <div className="hchart-label">DONE</div>
+                          <div className="hchart-bars">
+                            <div
+                              className="hbar done"
+                              style={{
+                                width: `${percent(statusCounts.DONE)}%`,
+                              }}
+                            ></div>
+                          </div>
+                          <div className="hchart-value">
+                            {statusCounts.DONE} ({percent(statusCounts.DONE)}%)
+                          </div>
+                        </div>
+                        <div className="hchart-row">
+                          <div className="hchart-label">IN PROGRESS</div>
+                          <div className="hchart-bars">
+                            <div
+                              className="hbar in-progress"
+                              style={{
+                                width: `${percent(
+                                  statusCounts.IN_PROGRESS,
+                                )}%`,
+                              }}
+                            ></div>
+                          </div>
+                          <div className="hchart-value">
+                            {statusCounts.IN_PROGRESS} (
+                            {percent(statusCounts.IN_PROGRESS)}%)
+                          </div>
+                        </div>
+                        <div className="hchart-row">
+                          <div className="hchart-label">OPEN</div>
+                          <div className="hchart-bars">
+                            <div
+                              className="hbar open"
+                              style={{
+                                width: `${percent(statusCounts.OPEN)}%`,
+                              }}
+                            ></div>
+                          </div>
+                          <div className="hchart-value">
+                            {statusCounts.OPEN} ({percent(statusCounts.OPEN)}%)
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </IonCardContent>
               </IonCard>
             </IonCol>
