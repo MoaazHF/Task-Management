@@ -76,8 +76,11 @@ you also can find the image on docker hub:https://hub.docker.com/repository/dock
 Building Time : 25 ~ 65 sec
 
  database : http://localhost:5432
+ 
  backend  : http://localhost:3000
+ 
  frontend : http://localhost:8080
+ 
 
 
 ### 3. Environment Variables (Optional)
