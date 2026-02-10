@@ -63,7 +63,7 @@ cd Task-Management
 
 ### 2. Run with Docker 🐳
 
-This command will pull the images and start the full stack:
+This command will build and start the full stack:
 
 **Bash**
 
@@ -75,7 +75,21 @@ you also can find the image on docker hub:https://hub.docker.com/repository/dock
 
 Building Time : 25 ~ 65 sec
 
-Visit `http://localhost:3000` to see the app.
+Visit `http://localhost:8080` to see the app.
+
+The backend API is available at `http://localhost:3000`.
+
+### 2b. Dev Mode (Faster Frontend)
+
+For quicker frontend startup with hot reload, use the dev override:
+
+**Bash**
+
+```
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+```
+
+Visit `http://localhost:5173`.
 
 ### 3. Environment Variables (Optional)
 
