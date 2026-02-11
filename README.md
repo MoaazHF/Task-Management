@@ -44,13 +44,10 @@ Copy and paste this single command block to start everything:
 ```bash
 
 git clone https://github.com/moaazhf/Task-Management.git
-
-
 cd Task-Management
-
-# Run with Docker (Pre-built images)
 docker-compose up
 
+```
  Main App http://localhost:3000
 
 To view the image on Docker Hub:https://hub.docker.com/repository/docker/moaaz20/task-manager
@@ -60,3 +57,4 @@ To view the image on Docker Hub:https://hub.docker.com/repository/docker/moaaz20
 👨‍💻 Author
 Moaaz
 Made with ❤️ and lots of ☕
+
