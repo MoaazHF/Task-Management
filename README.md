@@ -60,7 +60,6 @@ cd Task-Management
 
 **Markdown**
 
-
 ### 2. Run with Docker 🐳
 
 This command will build and start the full stack:
@@ -75,15 +74,9 @@ you also can find the image on docker hub:https://hub.docker.com/repository/dock
 
 Building Time : 25 ~ 65 sec
 
- database : http://localhost:5432
- 
- backend  : http://localhost:3000
- 
- frontend : http://localhost:8080
- 
+ The App is Workng on: http://localhost:3000
 
-
-### 3. Environment Variables (Optional)
+3. Environment Variables (Optional)
 
 The project comes with a default configuration in `docker-compose.yml`. However, if you want to customize the database credentials:
 
@@ -93,7 +86,6 @@ The project comes with a default configuration in `docker-compose.yml`. However,
    ```
    cp backend/.env.example backend/.env
    ```
-
 2. Open `.env` and update the values:
    **Code snippet**
 
@@ -106,9 +98,8 @@ The project comes with a default configuration in `docker-compose.yml`. However,
 
 ## 🏗️ Architecture
 
-## 
-
 ### Frontend
+
 - **React 18** - UI Library
 - **Ionic Framework 8** - Cross-platform components
 - **Framer Motion** - Smooth animations
@@ -116,12 +107,14 @@ The project comes with a default configuration in `docker-compose.yml`. However,
 - **Vite** - Fast build tool
 
 ### Backend
+
 - **NestJS** - Progressive Node.js framework
 - **TypeORM** - Database ORM
 - **PostgreSQL** - Relational database
 - **TypeScript** - Type safety
 
 ### DevOps
+
 - **Docker & Docker Compose** - Containerization
 - **Multi-stage builds** - Optimized images (~57MB)
 - **pnpm** - Fast package manager

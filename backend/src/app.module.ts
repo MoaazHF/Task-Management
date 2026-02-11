@@ -6,6 +6,11 @@ import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
+const frontendDistPath = [
+  join(process.cwd(), 'frontend', 'dist'),
+  join(process.cwd(), '..', 'frontend', 'dist'),
+].find((candidatePath) => existsSync(candidatePath));
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -13,10 +18,10 @@ import { existsSync } from 'fs';
       isGlobal: true,
     }),
 
-    ...(existsSync(join(process.cwd(), 'frontend', 'dist'))
+    ...(frontendDistPath
       ? [
           ServeStaticModule.forRoot({
-            rootPath: join(process.cwd(), 'frontend', 'dist'),
+            rootPath: frontendDistPath,
             exclude: ['/api/:splat(.*)'],
             serveRoot: '/',
           }),

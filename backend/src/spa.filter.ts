@@ -4,6 +4,7 @@ import {
   ExceptionFilter,
   NotFoundException,
 } from '@nestjs/common';
+import { existsSync } from 'fs';
 import { join } from 'path';
 
 @Catch(NotFoundException)
@@ -20,13 +21,17 @@ export class SpaFallbackFilter implements ExceptionFilter {
       });
     }
 
-    const indexPath = join(
-      process.cwd(),
-      '..',
-      'frontend',
-      'dist',
-      'index.html',
-    );
+    const indexPath = [
+      join(process.cwd(), 'frontend', 'dist', 'index.html'),
+      join(process.cwd(), '..', 'frontend', 'dist', 'index.html'),
+    ].find((candidatePath) => existsSync(candidatePath));
+
+    if (!indexPath) {
+      return response.status(404).json({
+        statusCode: 404,
+        message: 'Frontend build not found',
+      });
+    }
 
     return response.sendFile(indexPath);
   }

@@ -1,24 +1,9 @@
 services:
-  ports:
-    image: alpine:3.20
-    command:
-      - sh
-      - -c
-      - |
-        apk add --no-cache netcat-openbsd wget >/dev/null
-        until nc -z db 5432; do sleep 1; done
-        until wget -qO- http://backend:3000/api/tasks >/dev/null 2>&1; do sleep 1; done
-        until wget -qO- http://frontend/ >/dev/null 2>&1; do sleep 1; done
-        echo "database : http://localhost:5432"
-        echo "backend  : http://localhost:3000"
-        echo "frontend : http://localhost:8080"
-    restart: "no"
-
   backend:
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
-    image: moaaz20/task-manager-backend:latest
+    image: moaaz20/task-manager:latest
     ports:
       - "3000:3000"
     environment:
@@ -37,18 +22,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    image: moaaz20/task-manager-frontend:latest
-    ports:
-      - "8080:80"
-    depends_on:
-      backend:
-        condition: service_healthy
-    restart: on-failure
 
   db:
     image: postgres:14-alpine
