@@ -1,4 +1,4 @@
-# 🚀 Task Manager App
+#  Task Manager App
 
 ![Docker](https://img.shields.io/badge/Docker-Enabled-blue?logo=docker)
 ![React](https://img.shields.io/badge/Frontend-React%20%7C%20Ionic-61DAFB?logo=react)
@@ -9,7 +9,7 @@ A modern, full-stack Task Management application built with performance and UX i
 
 ---
 
-## ✨ Features
+##  Features
 
 | Feature | Description |
 | :--- | :--- |
@@ -34,7 +34,7 @@ A modern, full-stack Task Management application built with performance and UX i
 
 ---
 
-## 🛠️ Quick Start (Docker) 🐳
+##  Quick Start (Docker) 🐳
 
 You don't need Node.js or Postgres installed. Just **Docker**!
 
@@ -54,7 +54,7 @@ To view the image on Docker Hub:https://hub.docker.com/repository/docker/moaaz20
 
 ⚠️ > **Note:** Since Ionic adapts to system preferences, some input backgrounds might look different if your **Browser Theme** (Dark/Light) doesn't match the **App's Toggle Switch**. For the best consistency, keep them in sync.
 
-👨‍💻 Author
+ Author
 Moaaz
 Made with ❤️ and lots of ☕
 
