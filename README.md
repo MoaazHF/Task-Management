@@ -67,7 +67,7 @@ This command will build and start the full stack:
 **Bash**
 
 ```
-docker-compose up --build
+docker-compose up
 ```
 
 you also can find the image on docker hub:https://hub.docker.com/repository/docker/moaaz20/task-manager
@@ -75,25 +75,6 @@ you also can find the image on docker hub:https://hub.docker.com/repository/dock
 Building Time : 40 ~ 70 sec
 
  The App is Workng on: http://localhost:3000
-
-3. Environment Variables (Optional)
-
-The project comes with a default configuration in `docker-compose.yml`. However, if you want to customize the database credentials:
-
-1. Rename the example file in the backend folder:
-   **Bash**
-
-   ```
-   cp backend/.env.example backend/.env
-   ```
-2. Open `.env` and update the values:
-   **Code snippet**
-
-   ```
-   DB_PASSWORD=your_secure_password
-   DB_DATABASE=task_management
-   ```
-
 
 ## 👨‍💻 Author
 
