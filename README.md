@@ -51,5 +51,12 @@ cd Task-Management
 # Run with Docker (Pre-built images)
 docker-compose up
 
+ Main App http://localhost:3000
 
-Note: First time run might take 40~70 seconds to pull images depending on your internet speed.2. Access the ApplicationOnce the logs say Application is running, open your browser:ServiceURL🚀 Main Apphttp://localhost:3000🐳 Docker HubView Image⚠️ UI Theme TipFor the best Glassmorphism experience, keep your browser's theme (Dark/Light) in sync with the app's toggle switch.👨‍💻 AuthorMoaazMade with ❤️ and lots of ☕
+To view the image on Docker Hub:https://hub.docker.com/repository/docker/moaaz20/task-manager
+
+⚠️ > **Note:** Since Ionic adapts to system preferences, some input backgrounds might look different if your **Browser Theme** (Dark/Light) doesn't match the **App's Toggle Switch**. For the best consistency, keep them in sync.
+
+👨‍💻 Author
+Moaaz
+Made with ❤️ and lots of ☕
