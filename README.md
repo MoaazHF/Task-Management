@@ -94,33 +94,6 @@ The project comes with a default configuration in `docker-compose.yml`. However,
    DB_DATABASE=task_management
    ```
 
----
-
-## 🏗️ Architecture
-
-### Frontend
-
-- **React 18** - UI Library
-- **Ionic Framework 8** - Cross-platform components
-- **Framer Motion** - Smooth animations
-- **TypeScript** - Type safety
-- **Vite** - Fast build tool
-
-### Backend
-
-- **NestJS** - Progressive Node.js framework
-- **TypeORM** - Database ORM
-- **PostgreSQL** - Relational database
-- **TypeScript** - Type safety
-
-### DevOps
-
-- **Docker & Docker Compose** - Containerization
-- **Multi-stage builds** - Optimized images (~57MB)
-- **pnpm** - Fast package manager
-- **Nginx** - Production web server
-
----
 
 ## 👨‍💻 Author
 
