@@ -72,7 +72,7 @@ docker-compose up --build
 
 you also can find the image on docker hub:https://hub.docker.com/repository/docker/moaaz20/task-manager
 
-Building Time : 25 ~ 65 sec
+Building Time : 40 ~ 70 sec
 
  The App is Workng on: http://localhost:3000
 
