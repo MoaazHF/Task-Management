@@ -42,12 +42,14 @@ You don't need Node.js or Postgres installed. Just **Docker**!
 Copy and paste this single command block to start everything:
 
 ```bash
-# Clone the repository
-git clone [https://github.com/moaazhf/Task-Management.git](https://github.com/moaazhf/Task-Management.git)
 
-# Enter directory
+git clone https://github.com/moaazhf/Task-Management.git
+
+
 cd Task-Management
 
 # Run with Docker (Pre-built images)
 docker-compose up
+
+
 Note: First time run might take 40~70 seconds to pull images depending on your internet speed.2. Access the ApplicationOnce the logs say Application is running, open your browser:ServiceURL🚀 Main Apphttp://localhost:3000🐳 Docker HubView Image⚠️ UI Theme TipFor the best Glassmorphism experience, keep your browser's theme (Dark/Light) in sync with the app's toggle switch.👨‍💻 AuthorMoaazMade with ❤️ and lots of ☕
