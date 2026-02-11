@@ -32,7 +32,7 @@ services:
       POSTGRES_PASSWORD: 1610
       POSTGRES_DB: task-management
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
