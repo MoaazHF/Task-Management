@@ -1,4 +1,9 @@
-# Task Manager App
+# 🚀 Task Manager App
+
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue?logo=docker)
+![React](https://img.shields.io/badge/Frontend-React%20%7C%20Ionic-61DAFB?logo=react)
+![NestJS](https://img.shields.io/badge/Backend-NestJS-E0234E?logo=nestjs)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?logo=postgresql)
 
 A modern, full-stack Task Management application built with performance and UX in mind. Featuring a Glassmorphism UI, Dark/Light mode, and smooth animations.
 
@@ -6,83 +11,43 @@ A modern, full-stack Task Management application built with performance and UX i
 
 ## ✨ Features
 
-- **🎨 Modern UI/UX:** Glassmorphism design with Framer Motion animations.
-- **🌗 Dark & Light Mode:** Automatic system detection with a manual toggle switch.
-- **⚡ Tech Stack:**
-  - **Frontend:** React, Ionic Framework, Framer Motion.
-  - **Backend:** NestJS (Node.js), TypeScript.
-  - **Database:** PostgreSQL.
-- **🐳 Dockerized:** Fully containerized for easy deployment (Frontend + Backend + DB).
-- **🛡️ Safety:** Confirmation popups for critical actions (Delete).
-- **🔎 Filtering:** Filter tasks by Status (Open, In Progress, Done) and Priority (Low, Medium, High).
+| Feature | Description |
+| :--- | :--- |
+| **🎨 Modern UI/UX** | Glassmorphism design with Framer Motion animations. |
+| **🌗 Dark & Light Mode** | Automatic detection with manual toggle switch. |
+| **🐳 Fully Dockerized** | One command to run the full stack (Frontend + Backend + DB). |
+| **🛡️ Data Safety** | Confirmation popups for critical actions. |
+| **🔎 Smart Filtering** | Filter tasks by Status and Priority easily. |
 
 ---
 
 ## 📸 Screenshots
 
-### Light Mode
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Light Mode](./screenshots/LightMode.png) | ![Dark Mode](./screenshots/DarkMode.png) |
 
-![Light Mode](./screenshots/LightMode.png)
-
-### Dark Mode
-
-![Dark Mode](./screenshots/DarkMode.png)
-
-### Web & Mobile Responsive
-
-![Responsive](./screenshots/CrossPlatformApp.png)
+<p align="center">
+  <b>📱 Web & Mobile Responsive</b><br>
+  <img src="./screenshots/CrossPlatformApp.png" alt="Responsive" width="600">
+</p>
 
 ---
 
-## ⚠️ Important Note Regarding UI Theme
-
-This application is built using **Ionic Framework**, which deeply integrates with your system's and browser's native color scheme preferences.
-
-For the **best visual experience** (especially to enjoy the Glassmorphism effects and correct contrast):
-
-- The app automatically detects your system preference on startup.
-- If you switch modes manually using the toggle button ☀️/🌙, **it is recommended that your browser's theme matches the selected mode.**
-
-> **Why?** Ionic components (like Modals and Alerts) inherit base styles from the browser's `prefers-color-scheme` media query. Keeping them in sync ensures 100% color consistency.
-
----
-
-## 🛠️ Installation & Running
+## 🛠️ Quick Start (Docker) 🐳
 
 You don't need Node.js or Postgres installed. Just **Docker**!
 
-### 1. Clone the repository
+### 1. Run the App
+Copy and paste this single command block to start everything:
 
 ```bash
-git clone https://github.com/moaazhf/Task-Management.git
+# Clone the repository
+git clone [https://github.com/moaazhf/Task-Management.git](https://github.com/moaazhf/Task-Management.git)
+
+# Enter directory
 cd Task-Management
-```
 
-**Markdown**
-
-### 2. Run with Docker 🐳
-
-This command will build and start the full stack:
-
-**Bash**
-
-```
+# Run with Docker (Pre-built images)
 docker-compose up
-```
-
-you also can find the image on docker hub:https://hub.docker.com/repository/docker/moaaz20/task-manager
-
-Building Time : 40 ~ 70 sec
-
- The App is Workng on: http://localhost:3000
-
-## 👨‍💻 Author
-
-**Moaaz**
-
-- GitHub: [@MoaazHF](https://github.com/MoaazHF)
-- Docker Hub: [moaazhf](https://hub.docker.com/repositories/moaaz20)
-
----
-
-Made with ❤️ and lots of ☕
+Note: First time run might take 40~70 seconds to pull images depending on your internet speed.2. Access the ApplicationOnce the logs say Application is running, open your browser:ServiceURL🚀 Main Apphttp://localhost:3000🐳 Docker HubView Image⚠️ UI Theme TipFor the best Glassmorphism experience, keep your browser's theme (Dark/Light) in sync with the app's toggle switch.👨‍💻 AuthorMoaazMade with ❤️ and lots of ☕
